@@ -11,11 +11,11 @@ import Foundation
 func gauges(myPlane : Aviatrix) {
     print("Reading the gauges...")
     print(" ")
-//    print("| Running:  | ✅")
-//    print("| Location:  | \(myPlane.location)")
-//    print("| Distance:  | \(myPlane.distanceTraveled) miles")
-//    print("| Fuel:      | \(myPlane.fuelLevel) gallons")
-//    print("| Max Fuel:  | \(myPlane.maxFuel) gallons")
+    print("| Running:  | ✅")
+    print("| Location:  | \(myPlane.location)")
+    print("| Distance:  | \(myPlane.displacement) miles")
+    print("| Fuel:      | \(myPlane.fuelLevel) gallons")
+    print("| Max Fuel:  | \(myPlane.maxFuel) gallons")
 //    print("| MPG:       | \(myPlane.milesPerGallon)")
 //    print("| Fuel Bill: | \(myPlane.fuelCost)")
 }
@@ -23,10 +23,10 @@ func gauges(myPlane : Aviatrix) {
 func fly(myPlane : Aviatrix) {
     print("Where would you like to fly to? ")
     print(" ")
-    let destinations = myPlane.knownDestinations()
+    let destinations = myPlane.knownDestinations(target: "")
     
     for (index, city) in destinations.enumerated() {
-        let distance = myPlane.distanceTo(target: city)
+        let distance = myPlane.distanceTo(target : city)
         print("\(index): \(city), \(distance) miles")
     }
     
@@ -34,14 +34,14 @@ func fly(myPlane : Aviatrix) {
     var desiredLocation = ""
     
     if response! >= 0 && response! < 4 {
-        desiredLocation = myPlane.knownDestinations()[response!]
+        desiredLocation = myPlane.knownDestinations(target: "")[response!]
         
         print("🛫 Preparing for takeoff...")
         print("🛫 Flying...")
         
         if fuelCheck(myPlane: myPlane, destination : desiredLocation) {
             myPlane.flyTo(destination: desiredLocation)
-            print("🛬 You've arrived in _________!")
+            print("🛬 You've arrived in \(desiredLocation)!")
             gauges(myPlane: myPlane)
         }
     }
@@ -80,7 +80,7 @@ print("Welcome to the Aviatrix Flight System by \(author)")
 
 plane.start()
 
-print("You're currently in _________")
+print("You're currently in \(location)")
 
 var command = ""
 
